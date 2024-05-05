@@ -1,0 +1,106 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 0,
+    "modules-left": [
+        "clock",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [],
+    "modules-right": [
+        "tray",
+        "custom/cpugov",
+        "cpu",
+        "memory",
+        "disk",
+        "battery",
+        "backlight",
+        "pulseaudio",
+        "pulseaudio#microphone"
+    ],
+
+    "clock": {
+        "format": "{: %R   %d/%m}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "hyprland/workspaces": {
+        "format": "{icon} {windows}",
+        "format-window-separator": " ",
+        "window-rewrite-default": "",
+        "window-rewrite": {
+          "class<firefox>": "",
+          "class<kitty>": "", 
+          "code": "󰨞"
+          }
+    },
+    
+    "tray": {
+        "icon-size": 13,
+        "spacing": 10
+    },
+
+    
+    "custom/cpugov": {
+      "exec": "~/.config/waybar/get_cpu_gov.sh",
+      "return-type": "json",
+      "format": "{icon} {}",
+      "interval": 1,
+      "tooltip": true
+    },
+
+    "cpu": {
+        "format": "  {}%"
+    },
+
+    "memory": {
+        "format": "  {}%"
+    },
+
+    "disk": {
+        "interval": 60,
+        "format": "  {percentage_used}%"
+    },
+    
+    "backlight": {
+        "device": "amdgpu_bl1",
+        "format": "{icon} {percent}%",
+        "format-icons": ["","", "", ""]
+    },
+
+    "battery": {
+        "interval": 1,
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["","","","",""]
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "  {volume}%",
+        "on-click": "pamixer -t",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "  {volume}%",
+        "on-click": "pamixer --default-source -t"
+    }
+
+}
+

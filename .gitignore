@@ -1,0 +1,19 @@
+# block everything
+/*
+
+*.save
+*.save.*
+hypr/log.txt
+nixos/hardware-configuration.nix
+nixos/flake.lock
+
+# except
+!.gitignore
+!LICENSE
+
+!git/
+!hypr/
+!kitty/
+!nixos/
+!waybar/
+
