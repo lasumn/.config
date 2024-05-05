@@ -312,7 +312,7 @@
  
       comp="c && g++ -o test test.cpp && ./test";
 
-      rbu="sudo nix-channel --update && sudo nixos-rebuild switch --flake /etc/nixos#nixos";
+      rbu="sudo nix-channel --update && sudo nixos-rebuild switch --flake ~/.config/nixos#nixos";
       squeak-run="cd /home/ltm/Uni/SWA/STST/Squeak6.0-22104-64bit-202206021410-Linux-x64 &&rm output.txt && touch output.txt && steam-run ./squeak.sh ./shared/Squeak6.0-22104-64bit.image >> output.txt ";
     };
   };

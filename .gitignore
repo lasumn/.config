@@ -4,8 +4,7 @@
 *.save
 *.save.*
 hypr/log.txt
-nixos/hardware-configuration.nix
-nixos/flake.lock
+# nixos/hardware-configuration.nix cant block that bc the flake wont look at files not tracked by git
 
 # except
 !.gitignore
