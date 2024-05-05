@@ -1,143 +1,136 @@
 {config, pkgs, lib, ... }:
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   system.stateVersion = "23.05";
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-
   time.timeZone = "Europe/Berlin";
-  i18n.defaultLocale = "de_DE.UTF-8";
+  sound.enable = true;
+  security.rtkit.enable = true;
 
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "de";
-  };
+  console = { keyMap = "de"; font = "Lat2-Terminus16"; };
 
-  fonts.packages = [
-    pkgs.font-awesome
-    pkgs.roboto
-    pkgs.nerdfonts
-  ];
+  fonts.packages = with pkgs; [ font-awesome roboto nerdfonts ];
 
-  boot = {
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
-    kernelPackages = pkgs.linuxPackages_latest;
-    initrd.kernelModules = ["amdgpu"];
-    kernelModules = [ "uinput" ];
-    tmp.cleanOnBoot = true;
-  };
-
-  hardware = {
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-    };
-
-    enableRedistributableFirmware = true;
-
-    opengl = {
-      enable=true;
-      extraPackages = [
-        pkgs.rocm-opencl-icd
-        pkgs.rocm-opencl-runtime
-        pkgs.amdvlk
-      ];
-
-      extraPackages32 = [ pkgs.driversi686Linux.amdvlk  ];
-      driSupport = true;
-      driSupport32Bit = true;
-    };
-
-  };
+  virtualisation.libvirtd.enable = true;
 
   networking = {
     hostName = "larstop";
     networkmanager.enable = true;
     proxy.noProxy = "127.0.0.1, localhost, internal.domain";
     firewall.enable = true;
+  };  
+
+  boot = {
+    tmp.cleanOnBoot = true;
+    kernelModules = [ "uinput" ];
+    initrd.kernelModules = ["amdgpu"];
+    kernelPackages = pkgs.linuxPackages_latest;
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
+
+  hardware = {
+    enableRedistributableFirmware = true;
+    bluetooth = { enable = true; powerOnBoot = false; };
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = [ pkgs.rocm-opencl-icd pkgs.rocm-opencl-runtime pkgs.amdvlk ];
+      extraPackages32 = [ pkgs.driversi686Linux.amdvlk  ];
+    };
+  };
+
+  i18n = {
+    defaultLocale       = "en_US.UTF-8";
+    extraLocaleSettings = { 
+      LANG              = "en_US.UTF-8"; 
+      LC_CTYPE          = "en_US.UTF-8";
+      LC_NUMERIC        = "de_DE.UTF-8";
+      LC_TIME           = "de_DE.UTF-8";
+      LC_COLLATE        = "de_DE.UTF-8";
+      LC_MONETARY       = "de_DE.UTF-8";
+      LC_MESSAGES       = "de_DE.UTF-8";
+      LC_PAPER          = "de_DE.UTF-8";
+      LC_NAME           = "de_DE.UTF-8";
+      LC_ADDRESS        = "de_DE.UTF-8";
+      LC_TELEPHONE      = "de_DE.UTF-8";
+      LC_MEASUREMENT    = "de_DE.UTF-8";
+      LC_IDENTIFICATION = "de_DE.UTF-8";
+    };
   };
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland ]; 
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal-hyprland ]; 
   };
-
-  sound.enable = true;
-  security.rtkit.enable = true;
 
   users.users.ltm = {
     isNormalUser = true;
+    password="ltm"; #stop looking at the password its rude ok i will change it eventually
     extraGroups = [ "wheel" "input" "networkmanager" "audio" "libvirtd"];
-    password="ltm";
+    
+    packages = with pkgs; [
+      firefox 
+      chromium 
+      thunderbird
+      bitwarden
 
-    packages = [
-      pkgs.firefox
-      pkgs.thunderbird
-      pkgs.chromium
+      discord 
+      telegram-desktop 
+      slack 
+      zoom-us
+      obs-studio
 
-      pkgs.discord
-      pkgs.telegram-desktop
-      pkgs.slack
-      pkgs.zoom-us
-      pkgs.obs-studio
+      git 
+      gdb 
+      clang 
+      clang-tools
+      julia-bin
+      vscodium.fhs
+      texlive.combined.scheme-full
+      steam #for squeak :)
 
-      pkgs.git
-      pkgs.vscodium.fhs
-      pkgs.julia-bin
-      pkgs.gdb
-      pkgs.clang
-      pkgs.clang-tools
+      eza   
+      bat 
+      unzip
+      pcmanfm
+      virt-manager
+      dconf #stores configs, in particular for virt-manager
+      wayvnc
 
-      pkgs.virt-manager
-      pkgs.dconf #stores configs, in particular for virt-manager
-      pkgs.wayvnc
-
-      pkgs.bitwarden
-
-      pkgs.eza
-      pkgs.bat
-      pkgs.unzip
-      pkgs.neofetch
-      pkgs.pcmanfm
-
-      pkgs.gpu-viewer
-      pkgs.clinfo
-      pkgs.htop
-      pkgs.qdirstat
-
-      pkgs.xdg-ninja
+      gpu-viewer 
+      clinfo 
+      htop 
+      qdirstat
     ];
   };
 
   environment = {
-    systemPackages = [
-      pkgs.bc #for hyprcalcs
-      pkgs.jq #also for waybar
-      pkgs.waybar
-      pkgs.libnotify
-      pkgs.dunst
-      pkgs.wbg
-      pkgs.libpng
-      pkgs.libjpeg
-      pkgs.libwebp
-      pkgs.kitty
-      pkgs.networkmanagerapplet
-      pkgs.rofi-wayland
-      pkgs.waybar
-      pkgs.xdg-desktop-portal
-      pkgs.xdg-desktop-portal-hyprland
-      pkgs.brightnessctl
-      pkgs.grimblast
-      pkgs.pqiv #for dialog
+    systemPackages = with pkgs; [
+      bc #for hyprcalcs
+      jq #also for waybar  
+      libnotify
+      dunst
+      wbg
+      libpng
+      libjpeg
+      libwebp
+      kitty
+      networkmanagerapplet
+      rofi-wayland
+      waybar
+      xdg-desktop-portal
+      xdg-desktop-portal-hyprland
+      brightnessctl
+      grimblast
 
-      pkgs.nh
+      nh
     ];
 
     sessionVariables = rec {
@@ -145,27 +138,18 @@
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME   = "$HOME/.local/share";
       XDG_STATE_HOME  = "$HOME/.local/state";
-
-      # Not officially in the specification
       XDG_BIN_HOME    = "$HOME/.local/bin";
-      PATH = [ "${XDG_BIN_HOME}" ];
+      PATH            =["${XDG_BIN_HOME}" ];
 
-      NIXOS_OZONE_WL = 	''true'';
+      NIXOS_OZONE_WL  = "true";
     };
   };
-
-  #VIRTMANAGER
-  virtualisation.libvirtd.enable = true;
 
   services = {
 
     blueman = { enable = true; };
     thinkfan = { enable = false; };
-
-    mullvad-vpn = {
-      enable = true;
-      package = pkgs.mullvad-vpn;
-    };
+    mullvad-vpn = { enable = true; package = pkgs.mullvad-vpn; };
 
     pipewire = {
       enable = true;
@@ -178,130 +162,33 @@
     tlp = {
       enable = true;
       settings = {
+        CPU_MIN_PERF_ON_AC 		= 0;
+        CPU_MAX_PERF_ON_AC 		= 100;
+        CPU_MIN_PERF_ON_BAT 	= 0;
+        CPU_MAX_PERF_ON_BAT 	= 100;
 
-     #CPU_SCALING_GOVERNOR_ON_BAT 	= "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT	= "powersave";
+        START_CHARGE_THRESH_BAT0 = 50;
+        STOP_CHARGE_THRESH_BAT0   = 70;
 
-     #CPU_ENERGY_PERF_POLICY_ON_BAT 	= "performance";
-      CPU_ENERGY_PERF_POLICY_ON_BAT 	= "powersave";
+        CPU_SCALING_GOVERNOR_ON_BAT	  = "powersave";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
+        CPU_SCALING_GOVERNOR_ON_AC	  = "perfomance";
+        CPU_ENERGY_PERF_POLICY_ON_AC 	= "performance";
 
-      CPU_SCALING_GOVERNOR_ON_AC	= "perfomance";
-     #CPU_SCALING_GOVERNOR_ON_AC 	= "powersave";
-
-      CPU_ENERGY_PERF_POLICY_ON_AC 	= "performance";
-     #CPU_ENERGY_PERF_POLICY_ON_AC 	= "powersave";
-
-      CPU_MIN_PERF_ON_AC 		= 0;
-      CPU_MAX_PERF_ON_AC 		= 100;
-      CPU_MIN_PERF_ON_BAT 		= 0;
-      CPU_MAX_PERF_ON_BAT 		= 100;
-
-      START_CHARGE_THRESH_BAT0 		= 50;
-      STOP_CHARGE_THRESH_BAT0 		= 70;
-
-      DEVICES_TO_DISABLE_ON_STARTUP	= "bluetooth";
+        DEVICES_TO_DISABLE_ON_STARTUP	= "bluetooth";
       };
     };
   };
-
-  #SWA#SQUEAK
-
-  programs.steam.enable = true;
-  nixpkgs.overlays = [
-    (final: prev: {
-      steam = prev.steam.override ({ extraPkgs ? pkgs': [], ... }: {
-        extraPkgs = pkgs': (extraPkgs pkgs') ++ (with pkgs'; [
-          glfw
-        ]);
-      });
-    })
-  ];
-
+ 
   programs = {
 
-    hyprland = {
-    	enable = true;
-    	xwayland.enable = true;
-    };
-
-   /* nixvim = {
-
-      enable = false;
-      vimAlias = true;
-
-      extraConfigVim = "set noshowmode";
-
-    	options = {
-  	  relativenumber = true; # Show relative line numbers
-	    shiftwidth = 2;        # Tab width should be 2
-			cursorline = true;
-    	};
-
-      highlight.ExtraWhitespace.bg = "gray";
-      match.ExtraWhitespace = "\\s\\+$";
-
-      keymaps = [
-        { key = "j"; action = "k"; }
-        { key = "k"; action = "j"; }
-      ];
-
-      colorschemes.gruvbox = {
-        enable = true;
-        settings.transparent_bg = true;
-      };
-
-      extraPlugins = with pkgs.vimPlugins; [
-        #vim-be-good
-      ];
-
-      plugins = {
-
-        lualine = { enable = true; };
-      	treesitter = { enable = true; };
-	      indent-blankline = { enable = true; };
-
-	      cmp-vim-lsp.enable = true;
-
-	      lsp = {
-
-          keymaps = {
-            silent = true;
-            diagnostic = {
-              "<leader>k" = "goto_prev";
-              "<leader>j" = "goto_next";
-            };
-
-            lspBuf = {
-              gd = "definition";
-              K = "hover";
-            };
-          };
-
-          servers = {
-            bashls.enable = true;
-            clangd.enable = true;
-            nil_ls.enable = true;
-          };
-
-        };
-
-      };
-
-      autoCmd =	[
-        {
-          event = "FileType";
-          pattern = "nix";
-          command = "setlocal tabstop=2 shiftwidth=2";
-        }
-      ];
-
-    };*/
+    hyprland = { enable = true; xwayland.enable = true; };
 
     bash.shellAliases = {
       c="clear";
       b="bat --paging=never";
-      cfg="cd /etc/nixos";
-      hcfg="cd ~/.config";
+
+      cfg="cd ~/.config";
 
       e ="eza --tree --level=1 --all --icons --git";
       e1="eza --tree --level=2 --all --icons --git";
