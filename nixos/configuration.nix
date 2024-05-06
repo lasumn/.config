@@ -10,14 +10,14 @@
   sound.enable = true;
   security.rtkit.enable = true;
 
-  console = { 
-    keyMap = "de"; 
-    font = "Lat2-Terminus16"; 
+  console = {
+    keyMap = "de";
+    font = "Lat2-Terminus16";
   };
 
-  fonts.packages = with pkgs; [ 
-    roboto 
-    nerdfonts 
+  fonts.packages = with pkgs; [
+    roboto
+    nerdfonts
     font-awesome
   ];
 
@@ -28,7 +28,7 @@
     firewall.enable = true;
     networkmanager.enable = true;
     proxy.noProxy = "127.0.0.1, localhost, internal.domain";
-  };  
+  };
 
   boot = {
     tmp.cleanOnBoot = true;
@@ -43,29 +43,29 @@
 
   hardware = {
     enableRedistributableFirmware = true;
-    bluetooth = { 
-      enable = true; 
-      powerOnBoot = false; 
+    bluetooth = {
+      enable = true;
+      powerOnBoot = false;
     };
     opengl = {
       enable          = true;
       driSupport      = true;
       driSupport32Bit = true;
-      extraPackages   = with pkgs; [ 
-        amdvlk 
-        rocm-opencl-icd 
-        rocm-opencl-runtime 
+      extraPackages   = with pkgs; [
+        amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
       ];
-      extraPackages32 = with pkgs; [ 
-        driversi686Linux.amdvlk 
+      extraPackages32 = with pkgs; [
+        driversi686Linux.amdvlk
       ];
     };
   };
 
   i18n = {
     defaultLocale       = "en_US.UTF-8";
-    extraLocaleSettings = { 
-      LANG              = "en_US.UTF-8"; 
+    extraLocaleSettings = {
+      LANG              = "en_US.UTF-8";
       LC_CTYPE          = "en_US.UTF-8";
       LC_NUMERIC        = "de_DE.UTF-8";
       LC_TIME           = "de_DE.UTF-8";
@@ -83,46 +83,46 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ 
-      xdg-desktop-portal-gtk 
-      xdg-desktop-portal-hyprland 
-    ]; 
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+    ];
   };
 
   users.users.ltm = {
     isNormalUser = true;
     password = "ltm"; #stop looking at the password its rude ok i will change it eventually
-    extraGroups = [ 
-      "wheel" 
+    extraGroups = [
+      "wheel"
       "input"
-      "audio"     
+      "audio"
       "libvirtd"
       "networkmanager"
     ];
-    
+
     packages = with pkgs; [
-      firefox 
-      chromium 
+      firefox
+      chromium
       thunderbird
       bitwarden
 
-      discord 
-      telegram-desktop 
-      slack 
+      discord
+      telegram-desktop
+      slack
       zoom-us
       obs-studio
 
-      git 
-      gdb 
-      clang 
+      git
+      gdb
+      clang
       clang-tools
       julia-bin
       vscodium.fhs
       texlive.combined.scheme-full
       steam #for squeak :)
 
-      eza   
-      bat 
+      eza
+      bat
       unzip
       pcmanfm
       virt-manager
@@ -130,17 +130,15 @@
       wayvnc
       nh
 
-      gpu-viewer 
-      clinfo 
-      htop 
+      gpu-viewer
+      clinfo
+      htop
       qdirstat
     ];
   };
 
   environment = {
     systemPackages = with pkgs; [
-      bc #for hyprcalcs
-      jq #also for waybar  
       libnotify
       dunst
       wbg
@@ -166,8 +164,6 @@
       PATH            =["${XDG_BIN_HOME}" ];
 
       NIXOS_OZONE_WL  = "true";
-
-      WLR_NO_HARDWARE_CURSORS = "true";
     };
   };
 
@@ -179,10 +175,10 @@
 
     pipewire = {
       enable            = true;
-      alsa.enable       = true;
-      alsa.support32Bit = true;
       pulse.enable      = true;
       jack.enable       = true;
+      alsa.enable       = true;
+      alsa.support32Bit = true;
     };
 
     tlp = {
@@ -205,28 +201,36 @@
       };
     };
   };
- 
+
   programs = {
 
-    hyprland = { enable = true; xwayland.enable = true; };
+    hyprland = {
+      enable = true; 
+      xwayland.enable = true; 
+    };
 
     bash.shellAliases = {
-      c = "clear";
-      b = "bat --paging=never";
+      c     = "clear";
+      b     = "bat --paging=never";
 
-      cfg = "cd ~/.config";
+      cfg   = "cd ~/.config";
 
-      e  = "eza --tree --level=1 --all --icons --git";
-      e1 = "eza --tree --level=2 --all --icons --git";
-      e2 = "eza --tree --level=3 --all --icons --git";
+      e     = "eza --tree --level=1 --all --icons --git";
+      e1    = "eza --tree --level=2 --all --icons --git";
+      e2    = "eza --tree --level=3 --all --icons --git";
 
-      ws = "wayvnc 0.0.0.0 5900 --log-level=info";
-      wx = "wayvncctl wayvnc-exit";
- 
-      comp = "c && g++ -o test test.cpp && ./test";
+      ws    = "wayvnc 0.0.0.0 5900 --log-level=info";
+      wx    = "wayvncctl wayvnc-exit";
 
-      rbu = "sudo nix-channel --update && sudo nixos-rebuild switch --flake ~/.config/nixos#nixos";
-      squeak-run = "cd /home/ltm/Uni/SWA/STST/Squeak6.0-22104-64bit-202206021410-Linux-x64 &&rm output.txt && touch output.txt && steam-run ./squeak.sh ./shared/Squeak6.0-22104-64bit.image >> output.txt ";
+      comp  = "c && g++ -o test test.cpp && ./test";
+
+      rbu   = "sudo nix-channel --update && sudo nixos-rebuild switch --flake ~/.config/nixos#nixos";
+
+      squeak-run =  ''cd /home/ltm/Uni/SWA/STST/Squeak6.0-22104-64bit-202206021410-Linux-x64 &&
+                      rm output.txt &&
+                      touch output.txt &&
+                      steam-run ./squeak.sh ./shared/Squeak6.0-22104-64bit.image >> output.txt 
+                    '';
     };
   };
 }
