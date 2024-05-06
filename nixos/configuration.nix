@@ -10,17 +10,24 @@
   sound.enable = true;
   security.rtkit.enable = true;
 
-  console = { keyMap = "de"; font = "Lat2-Terminus16"; };
+  console = { 
+    keyMap = "de"; 
+    font = "Lat2-Terminus16"; 
+  };
 
-  fonts.packages = with pkgs; [ font-awesome roboto nerdfonts ];
+  fonts.packages = with pkgs; [ 
+    roboto 
+    nerdfonts 
+    font-awesome
+  ];
 
   virtualisation.libvirtd.enable = true;
 
   networking = {
     hostName = "larstop";
+    firewall.enable = true;
     networkmanager.enable = true;
     proxy.noProxy = "127.0.0.1, localhost, internal.domain";
-    firewall.enable = true;
   };  
 
   boot = {
@@ -36,13 +43,22 @@
 
   hardware = {
     enableRedistributableFirmware = true;
-    bluetooth = { enable = true; powerOnBoot = false; };
+    bluetooth = { 
+      enable = true; 
+      powerOnBoot = false; 
+    };
     opengl = {
-      enable = true;
-      driSupport = true;
+      enable          = true;
+      driSupport      = true;
       driSupport32Bit = true;
-      extraPackages = [ pkgs.rocm-opencl-icd pkgs.rocm-opencl-runtime pkgs.amdvlk ];
-      extraPackages32 = [ pkgs.driversi686Linux.amdvlk  ];
+      extraPackages   = with pkgs; [ 
+        amdvlk 
+        rocm-opencl-icd 
+        rocm-opencl-runtime 
+      ];
+      extraPackages32 = with pkgs; [ 
+        driversi686Linux.amdvlk 
+      ];
     };
   };
 
@@ -67,13 +83,22 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal-hyprland ]; 
+    extraPortals = with pkgs; [ 
+      xdg-desktop-portal-gtk 
+      xdg-desktop-portal-hyprland 
+    ]; 
   };
 
   users.users.ltm = {
     isNormalUser = true;
-    password="ltm"; #stop looking at the password its rude ok i will change it eventually
-    extraGroups = [ "wheel" "input" "networkmanager" "audio" "libvirtd"];
+    password = "ltm"; #stop looking at the password its rude ok i will change it eventually
+    extraGroups = [ 
+      "wheel" 
+      "input"
+      "audio"     
+      "libvirtd"
+      "networkmanager"
+    ];
     
     packages = with pkgs; [
       firefox 
@@ -103,6 +128,7 @@
       virt-manager
       dconf #stores configs, in particular for virt-manager
       wayvnc
+      nh
 
       gpu-viewer 
       clinfo 
@@ -129,8 +155,6 @@
       xdg-desktop-portal-hyprland
       brightnessctl
       grimblast
-
-      nh
     ];
 
     sessionVariables = rec {
@@ -142,33 +166,35 @@
       PATH            =["${XDG_BIN_HOME}" ];
 
       NIXOS_OZONE_WL  = "true";
+
+      WLR_NO_HARDWARE_CURSORS = "true";
     };
   };
 
   services = {
 
-    blueman = { enable = true; };
-    thinkfan = { enable = false; };
+    blueman     = { enable = true; };
+    thinkfan    = { enable = false; };
     mullvad-vpn = { enable = true; package = pkgs.mullvad-vpn; };
 
     pipewire = {
-      enable = true;
-      alsa.enable = true;
+      enable            = true;
+      alsa.enable       = true;
       alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
+      pulse.enable      = true;
+      jack.enable       = true;
     };
 
     tlp = {
       enable = true;
       settings = {
-        CPU_MIN_PERF_ON_AC 		= 0;
-        CPU_MAX_PERF_ON_AC 		= 100;
-        CPU_MIN_PERF_ON_BAT 	= 0;
-        CPU_MAX_PERF_ON_BAT 	= 100;
+        CPU_MIN_PERF_ON_AC 	= 0;
+        CPU_MAX_PERF_ON_AC 	= 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 100;
 
         START_CHARGE_THRESH_BAT0 = 50;
-        STOP_CHARGE_THRESH_BAT0   = 70;
+        STOP_CHARGE_THRESH_BAT0  = 70;
 
         CPU_SCALING_GOVERNOR_ON_BAT	  = "powersave";
         CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
@@ -185,22 +211,22 @@
     hyprland = { enable = true; xwayland.enable = true; };
 
     bash.shellAliases = {
-      c="clear";
-      b="bat --paging=never";
+      c = "clear";
+      b = "bat --paging=never";
 
-      cfg="cd ~/.config";
+      cfg = "cd ~/.config";
 
-      e ="eza --tree --level=1 --all --icons --git";
-      e1="eza --tree --level=2 --all --icons --git";
-      e2="eza --tree --level=3 --all --icons --git";
+      e  = "eza --tree --level=1 --all --icons --git";
+      e1 = "eza --tree --level=2 --all --icons --git";
+      e2 = "eza --tree --level=3 --all --icons --git";
 
-      ws="wayvnc 0.0.0.0 5900 --log-level=info";
-      wx="wayvncctl wayvnc-exit";
+      ws = "wayvnc 0.0.0.0 5900 --log-level=info";
+      wx = "wayvncctl wayvnc-exit";
  
-      comp="c && g++ -o test test.cpp && ./test";
+      comp = "c && g++ -o test test.cpp && ./test";
 
-      rbu="sudo nix-channel --update && sudo nixos-rebuild switch --flake ~/.config/nixos#nixos";
-      squeak-run="cd /home/ltm/Uni/SWA/STST/Squeak6.0-22104-64bit-202206021410-Linux-x64 &&rm output.txt && touch output.txt && steam-run ./squeak.sh ./shared/Squeak6.0-22104-64bit.image >> output.txt ";
+      rbu = "sudo nix-channel --update && sudo nixos-rebuild switch --flake ~/.config/nixos#nixos";
+      squeak-run = "cd /home/ltm/Uni/SWA/STST/Squeak6.0-22104-64bit-202206021410-Linux-x64 &&rm output.txt && touch output.txt && steam-run ./squeak.sh ./shared/Squeak6.0-22104-64bit.image >> output.txt ";
     };
   };
 }
