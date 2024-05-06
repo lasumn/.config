@@ -71,7 +71,7 @@
       LC_TIME           = "de_DE.UTF-8";
       LC_COLLATE        = "de_DE.UTF-8";
       LC_MONETARY       = "de_DE.UTF-8";
-      LC_MESSAGES       = "de_DE.UTF-8";
+      LC_MESSAGES       = "en_US.UTF-8";
       LC_PAPER          = "de_DE.UTF-8";
       LC_NAME           = "de_DE.UTF-8";
       LC_ADDRESS        = "de_DE.UTF-8";
@@ -160,7 +160,7 @@
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME   = "$HOME/.local/share";
       XDG_STATE_HOME  = "$HOME/.local/state";
-      XDG_BIN_HOME    = "$HOME/.local/bin";
+      XDG_BIN_HOME    = "$HOreME/.local/bin";
       PATH            =["${XDG_BIN_HOME}" ];
 
       NIXOS_OZONE_WL  = "true";
@@ -184,20 +184,20 @@
     tlp = {
       enable = true;
       settings = {
-        CPU_MIN_PERF_ON_AC 	= 0;
-        CPU_MAX_PERF_ON_AC 	= 100;
+        CPU_MIN_PERF_ON_AC  = 0;
+        CPU_MAX_PERF_ON_AC  = 100;
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 100;
 
         START_CHARGE_THRESH_BAT0 = 50;
         STOP_CHARGE_THRESH_BAT0  = 70;
 
-        CPU_SCALING_GOVERNOR_ON_BAT	  = "powersave";
+        CPU_SCALING_GOVERNOR_ON_BAT   = "powersave";
         CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
-        CPU_SCALING_GOVERNOR_ON_AC	  = "perfomance";
-        CPU_ENERGY_PERF_POLICY_ON_AC 	= "performance";
+        CPU_SCALING_GOVERNOR_ON_AC    = "perfomance";
+        CPU_ENERGY_PERF_POLICY_ON_AC  = "performance";
 
-        DEVICES_TO_DISABLE_ON_STARTUP	= "bluetooth";
+        DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
       };
     };
   };
