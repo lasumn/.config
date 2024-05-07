@@ -48,7 +48,7 @@
     "custom/cpugov": {
       "exec": "~/.config/waybar/get_cpu_gov.sh",
       "return-type": "json",
-      "format": "{icon} {}",
+      "format": "{}",
       "interval": 1,
       "tooltip": true
     },

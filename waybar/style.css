@@ -1,23 +1,23 @@
 * {
-    border: none;
-    border-radius: 0;
-    font-family: Roboto, "Font Awesome 6 Free";
-    font-weight: bold;
-    font-size: 14px;
-    min-height: 0;
+	border: none;
+	border-radius: 0;
+	font-family: Roboto, "Font Awesome 6 Free";
+	font-weight: bold;
+	font-size: 14px;
+	min-height: 0;
 }
 
 window#waybar {
-    background: rgba(21, 18, 27, 0);
-    color: #cdd6f4;
+	background: rgba(21, 18, 27, 0);
+	color: #cdd6f4;
 }
 
 tooltip {
-    background: #1e1e2e;
-    border-radius: 10px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #11111b;
+	background: #1e1e2e;
+	border-radius: 10px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #11111b;
 }
 
 #clock,
@@ -33,24 +33,24 @@ tooltip {
 #pulseaudio.microphone
 
 {
-    background: #1e1e2e;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 2px 0px;
-    margin-top: 0px;
-    border: 1px solid #2c2c57;
+	background: #1e1e2e;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin: 2px 0px;
+	margin-top: 0px;
+	border: 1px solid #2c2c57;
 }
 
 #clock			{ color: #fab387; border-radius: 0px 10px 10px 0px; }
-#workspaces		{ 		  border-radius: 10px;			margin-left: 10px; }
-#tray			{ 		  border-radius: 10px;			margin-right: 10px; }
-#custom-cpugov		{		  border-radius: 10px 0px 0px 10px; }
+#workspaces		{ border-radius: 10px;			margin-left: 10px; }
+#tray			{ border-radius: 10px;			margin-right: 10px; }
+#custom-cpugov	{ border-radius: 10px 0px 0px 10px; }
 #cpu			{ }
 #memory			{ }
 #disk			{ }
 #battery		{ color: #a6e3a1; }
 #backlight		{ color: #e7e09c; }
 #pulseaudio		{ color: #89b4fa; }
-#pulseaudio.microphone 	{ color: #cba6f7; }
+#pulseaudio.microphone { color: #cba6f7; }
 
 
