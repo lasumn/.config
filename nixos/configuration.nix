@@ -82,12 +82,12 @@
   };
 
   xdg.portal = {
-      enable = true;
-      xdgOpenUsePortal = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-hyprland
-        xdg-desktop-portal-wlr
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-wlr
     ];
     wlr.enable = true;
   };
@@ -124,7 +124,7 @@
       vscodium.fhs
       texlive.combined.scheme-full
       steam #for squeak :)
-      github-desktop
+      gitkraken
 
       eza
       bat
@@ -160,7 +160,6 @@
       xdg-desktop-portal-gtk
 
       xdg-utils #makes opening browser tabs from desktop app links not broken how cool is that
-      gnome.gnome-keyring
 
       brightnessctl
       grimblast
