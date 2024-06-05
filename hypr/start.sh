@@ -10,8 +10,6 @@ waybar &
 
 dunst &
 
-mullvad-vpn & 
-
 brightnessctl set 5%+
 
 sleep 1

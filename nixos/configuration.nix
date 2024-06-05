@@ -82,11 +82,14 @@
   };
 
   xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
+      enable = true;
+      xdgOpenUsePortal = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-hyprland
+        xdg-desktop-portal-wlr
     ];
+    wlr.enable = true;
   };
 
   users.users.ltm = {
@@ -111,6 +114,7 @@
       slack
       zoom-us
       obs-studio
+      gimp
 
       git
       gdb
@@ -120,6 +124,7 @@
       vscodium.fhs
       texlive.combined.scheme-full
       steam #for squeak :)
+      github-desktop
 
       eza
       bat
@@ -151,8 +156,14 @@
       waybar
       xdg-desktop-portal
       xdg-desktop-portal-hyprland
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+
+      xdg-utils #makes opening browser tabs from desktop app links not broken how cool is that
+
       brightnessctl
       grimblast
+      steam-run
     ];
 
     sessionVariables = rec {
@@ -189,8 +200,8 @@
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 100;
 
-        START_CHARGE_THRESH_BAT0 = 50;
-        STOP_CHARGE_THRESH_BAT0  = 70;
+        START_CHARGE_THRESH_BAT0 = 30;
+        STOP_CHARGE_THRESH_BAT0  = 60;
 
         CPU_SCALING_GOVERNOR_ON_BAT   = "powersave";
         CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
@@ -222,15 +233,9 @@
       ws    = "wayvnc 0.0.0.0 5900 --log-level=info";
       wx    = "wayvncctl wayvnc-exit";
 
-      comp  = "c && g++ -o test test.cpp && ./test";
+      comp  = "clear && g++ -std=c++20 -o xxx xxx.cpp && ./xxx";
 
       rbu   = "sudo nix-channel --update && sudo nixos-rebuild switch --flake ~/.config/nixos#nixos";
-
-      squeak-run =  ''cd /home/ltm/Uni/SWA/STST/Squeak6.0-22104-64bit-202206021410-Linux-x64 &&
-                      rm output.txt &&
-                      touch output.txt &&
-                      steam-run ./squeak.sh ./shared/Squeak6.0-22104-64bit.image >> output.txt 
-                    '';
     };
   };
 }
