@@ -124,7 +124,7 @@
       vscodium.fhs
       texlive.combined.scheme-full
       steam #for squeak :)
-      gitkraken
+      git-cola
 
       eza
       bat
@@ -231,8 +231,8 @@
       e1    = "eza --tree --level=2 --all --icons --git";
       e2    = "eza --tree --level=3 --all --icons --git";
 
-      ws    = "wayvnc 0.0.0.0 5900 --log-level=info";
-      wx    = "wayvncctl wayvnc-exit";
+      #ws    = "wayvnc 0.0.0.0 5900 --log-level=info";
+      #wx    = "wayvncctl wayvnc-exit";
 
       comp  = "clear && g++ -std=c++20 -o xxx xxx.cpp && ./xxx";
 
