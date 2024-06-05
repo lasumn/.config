@@ -160,6 +160,7 @@
       xdg-desktop-portal-gtk
 
       xdg-utils #makes opening browser tabs from desktop app links not broken how cool is that
+      gnome.gnome-keyring
 
       brightnessctl
       grimblast
@@ -223,6 +224,7 @@
     bash.shellAliases = {
       c     = "clear";
       b     = "bat --paging=never";
+      co    = "codium .";
 
       cfg   = "cd ~/.config";
 
