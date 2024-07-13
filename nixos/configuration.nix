@@ -239,8 +239,8 @@
     bash.shellAliases = {
       c     = "clear";
       b     = "bat --paging=never";
-      co    = "codium .";
-
+      g     = "lazygit";
+      co    = "codium";
       cfg   = "cd ~/.config";
 
       e     = "eza --tree --level=1 --all --icons --git";
@@ -252,7 +252,7 @@
 
       comp  = "clear && g++ -std=c++20 -o xxx xxx.cpp && ./xxx";
 
-      rbu   = "doas nix-channel --update && doas nixos-rebuild switch --flake ~/.config/nixos#nixos";
+      rb   = "doas nixos-rebuild switch --flake ~/.config/nixos#nixos";
     };
   };
 }
