@@ -239,7 +239,7 @@
     bash.shellAliases = {
       c     = "clear";
       b     = "bat --paging=never";
-      g     = "lazygit";
+      lg     = "lazygit";
       co    = "codium";
       cfg   = "cd ~/.config";
 
