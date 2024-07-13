@@ -19,6 +19,8 @@
     roboto
     nerdfonts
     font-awesome
+    fira
+    fira-code
   ];
 
   virtualisation.libvirtd.enable = true;
@@ -45,8 +47,9 @@
     enableRedistributableFirmware = true;
     bluetooth = {
       enable = true;
-      powerOnBoot = false;
+      powerOnBoot = true;
     };
+    xpadneo.enable = true; #for xbox controllers
     opengl = {
       enable          = true;
       driSupport      = true;
@@ -67,17 +70,17 @@
     extraLocaleSettings = {
       LANG              = "en_US.UTF-8";
       LC_CTYPE          = "en_US.UTF-8";
-      LC_NUMERIC        = "de_DE.UTF-8";
-      LC_TIME           = "de_DE.UTF-8";
-      LC_COLLATE        = "de_DE.UTF-8";
-      LC_MONETARY       = "de_DE.UTF-8";
+      LC_NUMERIC        = "en_US.UTF-8";
+      LC_TIME           = "en_US.UTF-8";
+      LC_COLLATE        = "en_US.UTF-8";
+      LC_MONETARY       = "en_US.UTF-8";
       LC_MESSAGES       = "en_US.UTF-8";
-      LC_PAPER          = "de_DE.UTF-8";
-      LC_NAME           = "de_DE.UTF-8";
-      LC_ADDRESS        = "de_DE.UTF-8";
-      LC_TELEPHONE      = "de_DE.UTF-8";
-      LC_MEASUREMENT    = "de_DE.UTF-8";
-      LC_IDENTIFICATION = "de_DE.UTF-8";
+      LC_PAPER          = "en_US.UTF-8";
+      LC_NAME           = "en_US.UTF-8";
+      LC_ADDRESS        = "en_US.UTF-8";
+      LC_TELEPHONE      = "en_US.UTF-8";
+      LC_MEASUREMENT    = "en_US.UTF-8";
+      LC_IDENTIFICATION = "en_US.UTF-8";
     };
   };
 
@@ -120,20 +123,17 @@
       gdb
       clang
       clang-tools
-      julia-bin
       vscodium.fhs
       texlive.combined.scheme-full
-      steam #for squeak :)
-      git-cola
+      steam 
+      lazygit
 
       eza
       bat
       unzip
-      pcmanfm
       virt-manager
       dconf #stores configs, in particular for virt-manager
       wayvnc
-      nh
 
       gpu-viewer
       clinfo
@@ -159,11 +159,17 @@
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
 
+      qt5.full
+      qt6.full
+
       xdg-utils #makes opening browser tabs from desktop app links not broken how cool is that
 
       brightnessctl
       grimblast
       steam-run
+      xboxdrv
+
+      git
     ];
 
     sessionVariables = rec {
@@ -171,10 +177,20 @@
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_DATA_HOME   = "$HOME/.local/share";
       XDG_STATE_HOME  = "$HOME/.local/state";
-      XDG_BIN_HOME    = "$HOreME/.local/bin";
+      XDG_BIN_HOME    = "$HOME/.local/bin";
       PATH            =["${XDG_BIN_HOME}" ];
 
       NIXOS_OZONE_WL  = "true";
+    };
+  };
+  security = {
+    sudo.enable = false;
+    doas = {
+      enable = true;
+      extraRules = [{
+        users = ["ltm"];
+        keepEnv = true; 
+      }];
     };
   };
 
@@ -203,12 +219,12 @@
         START_CHARGE_THRESH_BAT0 = 30;
         STOP_CHARGE_THRESH_BAT0  = 60;
 
-        CPU_SCALING_GOVERNOR_ON_BAT   = "powersave";
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
-        CPU_SCALING_GOVERNOR_ON_AC    = "perfomance";
+        CPU_SCALING_GOVERNOR_ON_BAT   = "performance"; #"powersave";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "performance"; #"powersave";
+        CPU_SCALING_GOVERNOR_ON_AC    = "performance";
         CPU_ENERGY_PERF_POLICY_ON_AC  = "performance";
 
-        DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
+        #DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
       };
     };
   };
@@ -236,7 +252,7 @@
 
       comp  = "clear && g++ -std=c++20 -o xxx xxx.cpp && ./xxx";
 
-      rbu   = "sudo nix-channel --update && sudo nixos-rebuild switch --flake ~/.config/nixos#nixos";
+      rbu   = "doas nix-channel --update && doas nixos-rebuild switch --flake ~/.config/nixos#nixos";
     };
   };
 }
