@@ -158,6 +158,7 @@
       xdg-desktop-portal-hyprland
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
+      batsignal
 
       qt5.full
       qt6.full
@@ -167,7 +168,6 @@
       brightnessctl
       grimblast
       steam-run
-      xboxdrv
 
       git
     ];
