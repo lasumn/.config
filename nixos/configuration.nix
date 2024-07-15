@@ -159,7 +159,7 @@
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
       batsignal
-      mailnag
+      birdtray
 
       qt5.full
       qt6.full

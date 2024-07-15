@@ -12,7 +12,7 @@ dunst &
 
 batsignal &
 
-mailnag &
+birdtray &
 
 brightnessctl set 5%+
 
