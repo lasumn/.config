@@ -10,6 +10,10 @@ waybar &
 
 dunst &
 
+batsignal &
+
+mailnag &
+
 brightnessctl set 5%+
 
 sleep 1

@@ -159,6 +159,7 @@
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
       batsignal
+      mailnag
 
       qt5.full
       qt6.full
