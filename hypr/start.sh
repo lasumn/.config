@@ -12,8 +12,6 @@ dunst &
 
 batsignal &
 
-birdtray &
-
 brightnessctl set 5%+
 
 sleep 1
